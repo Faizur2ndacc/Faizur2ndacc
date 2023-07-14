@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Ezybill.net | Control Panel - Login</title>
+	<link rel="canonical" href="https://sms.sscbpl.com" />
+<link href="assets/css/login-style.css" rel="stylesheet"  />
+<link href="assets/css/sat.css" rel="stylesheet"  />
+<link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />
+<script type="text/javascript" src="assets/js/jquery.js"></script>
+<script type="text/javascript" src="assets/js/JSFX_ImageZoom.js"></script>
+</head>
+<body>
+<center>
+<style>
+	.g-recaptcha {
+	    margin-top: 10px !important;
+	    margin-bottom: 10px !important;
+	    display: block;
+	    margin-left: 16px;
+	}
+</style>
+<script type="text/javascript" src="assets/js/jquery.js"></script>
+<script type="text/javascript" src="assets/js/curvycorners.src.js"></script>
+	<!--ezybill style sheet -->
+	<link rel="stylesheet" href="assets/css/login-style.css"/>
+<script type="text/JavaScript">
+	var body = document.body, 
+	html = document.documentElement; 
+	var body_height = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
+</script>
+<script type="text/JavaScript">
+	curvyCorners.addEvent(window, 'load', initCorners);
+	function initCorners() {
+		var settings = {
+		tl: { radius: 10},
+		tr: { radius: 10},
+		bl: { radius: 10},
+		br: { radius: 10},
+		antiAlias: true
+		}
+		curvyCorners(settings, "#login");       
+	}
+</script>
+<div id="wrapper">
+		<!-- Div with Ezybill background -->
+	<div id="login-box" class = "custom_div">
+			<H2><img src="documents/logo.png" width="125px" height="68px" style="margin:0px;"/></H2>
+		<br />
+		<form method="post" AUTOCOMPLETE = "off" action="index_php/welcome/index.html">
+			<table border="0" align="center" cellpadding="1" cellspacing="0"  >
+				<tr>
+					<td colspan="2" class="error1" align="center" ></td>
+				</tr>	
+                                <input type="hidden" name='ezybillemployee_id' value="0" />				
+				<input type="hidden" name='ezybillcustomer_id' value="0" />				
+				<tr>
+					<td  width="120px">Username</td><td><input name="uname" id='uname' type="text" class="form-login" size="30"  id="Name"></td>
+				</tr>
+				<tr>
+					<td colspan="2" height="5px"></td>
+				</tr>
+				<tr>
+					<td>Password</td>
+					<td><input name="upassword" type="password"  id="password" class="form-login" size="30"/></td>
+				</tr>
+								<tr>
+					<td>
+						<p style="width:130px;"><span id="imgCaptcha"></span>
+						<span><a href="javascript:void(0)" id="changeCaptcha"><img width='24' src="assets/images/refresh.png" style="margin-bottom:15px;"></a></span>	</p>
+					</td>	
+					<td>
+						<div>
+							<input type="text" id="txtCaptcha" class="form-login" name="txtCaptcha" value=""/>
+						</div>
+												<input type="hidden" id="hiddenCaptcha" name="hiddenCaptcha"/><input type="hidden" id="hiddenTries" name="hiddenTries" value="0"/>
+					</td>					
+				</tr>
+								<tr>
+									<td></td>    
+									<td align="center" style="font-size:12px; " >
+<!-- 					<input type="submit" style="color:white" value = "Login" id="proceed" onclick="return encrypt_pass()" >
+ -->						
+						<input type="submit" style="color:white" value = "Login" id="proceed" >
+					</input></td>
+				</tr>
+			</table>
+                    <div style="margin-top:10%"></div>
+		</form>
+	</div>
+	<!--to show login scroll description if any given from preferences written by chakri-->
+        <div style="width: 853px;"><marquee onMouseOver='this.stop()' onMouseOut='this.start()'><b style='color:#E24A3F;font-size:20px;'>>>>As per TRAI New Guidelines Please Update Customer original Details in SSCBPL SMS Portal Immediately.>>></b></marquee></br> </br> </div> 	<!-- Div with Ezybill background End-->
+	Ver 1.4</br></br>  
+			<font size="2" color="blue">Best viewed in Google Chrome</font>	<br/>
+	<marquee direction="left" scrolldelay="180"  width="600" height="20" >
+			</marquee>
+</div> 	
+<script type="text/javascript">
+	$('#Name').focus();
+	var result = "";
+	if(result!=""){	
+		$(".error1")
+		.fadeOut()
+		.text(result)
+		.css({'color':'#FFF','text-shadow':'0pt 0pt 0.2em rgb(136, 119, 255), 0pt 0pt 0.2em rgb(136, 119, 255), 0pt 0pt 0.2em rgb(136, 119, 255)'})
+		.fadeIn();
+	}
+</script>
+<script type="text/javascript">
+		$( document ).ready(function() {
+		$('#txtCaptcha').val('');
+		$.post('/index.php/captcha/generateCaptcha',function(response){
+			//var result = response.split('*');
+			//alert(result[1]);
+			$('#imgCaptcha').html(response);
+			//$('#hiddenCaptcha').val(result[1]);
+		});
+	});
+	$('#changeCaptcha').click(function() {
+		$.post('/index.php/captcha/generateCaptcha',function(response){
+			//var result = response.split('*');
+			//alert(result[1]);
+			$('#imgCaptcha').html(response);
+			//$('#hiddenCaptcha').val(result[1]);
+		});
+	});
+	$('#proceed').click(function() {
+		var uname = $('#uname').val().trim();
+		var password = $('#password').val().trim();
+		if(uname==''){
+			alert("Please enter the Username.");
+			$('#uname').focus();
+			return false;
+		}
+		if(password==''){
+			alert("Please enter the Password.");
+			$('#password').focus();
+			return false;
+		}
+		var hiddenCaptcha = $('#hiddenCaptcha').val().trim();
+		var txtCaptcha = $('#txtCaptcha').val().trim();
+		if(txtCaptcha==''){
+			alert("Please enter the text shown in the captcha.");
+			$('#txtCaptcha').focus();
+			return false;
+		}
+		else
+		{
+			var tries = $('#hiddenTries').val().trim();
+			tries = ++tries;
+			$('#hiddenTries').val(tries);
+			if(tries==5 || tries>5){
+				window.location= ("/");     
+				return false;
+			}
+			else{
+				let form_submit_status = false;
+				$.ajax({
+								url:'/index.php/captcha/validateCaptcha',
+								type:'POST',
+								async:false,
+								data:{'txtCaptcha': txtCaptcha,'uname':uname},
+								success:function(res){
+									if(res=="1")
+									{
+										form_submit_status = true;
+										encrypt_pass();
+									}
+									else{
+										alert('Captcha text and the text you have entered does not match.');
+										$.post('/index.php/captcha/generateCaptcha',function(response){
+											$('#imgCaptcha').html(response);
+											$('#txtCaptcha').val('');
+											$('#txtCaptcha').focus();
+										});
+									}
+								}
+						});
+					if(!form_submit_status)
+					{
+						return false;
+					}	
+			}
+		}
+	});
+	       $(function() {
+                $('marquee').mouseover(function() {
+                    $(this).attr('scrollamount',0);
+                }).mouseout(function() {
+                     $(this).attr('scrollamount',5);
+                });
+            });   
+</script>
+<script src="ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+<!-- <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script> -->
+<script>
+     function encrypt_pass()
+	 {
+        var pass=document.getElementById('password').value;
+		if(pass=="")
+		{
+		   document.getElementById('err').innerHTML='Error:Password is missing';
+		   return false;
+		}
+		else
+		{
+		   var hash = CryptoJS.MD5(pass);
+		  // alert(hash);
+		   document.getElementById('password').value=hash;
+		  return true;
+		}
+	}
+</script>
+</center>
+<center><font size="2">This is the free demo result. For a full version of this website, please go to  <a href="https://www6.waybackmachinedownloader.com/website-downloader-online/scrape-all-files/">Website Downloader</a></font></center></body>
+</html>
